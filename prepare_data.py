@@ -3,8 +3,9 @@ import os
 import cv2
 import numpy as np
 
-from utils import get_face_landmarks
+from utils import FaceMesh
 
+facemesh = FaceMesh()
 
 data_dir = './data'
 
@@ -15,7 +16,7 @@ for emotion_indx, emotion in enumerate(sorted(os.listdir(data_dir))):
 
         image = cv2.imread(image_path)
 
-        face_landmarks = get_face_landmarks(image)
+        face_landmarks = facemesh.get_face_landmarks(image)
 
         if len(face_landmarks) == 1404:
             face_landmarks.append(int(emotion_indx))

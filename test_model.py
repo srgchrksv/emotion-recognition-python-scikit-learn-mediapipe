@@ -2,22 +2,24 @@ import pickle
 
 import cv2
 
-from utils import get_face_landmarks
+from utils import FaceMesh
 
+
+facemesh = FaceMesh(static_image_mode=False)
 
 emotions = ['HAPPY', 'SAD', 'SURPRISED']
 
 with open('./model', 'rb') as f:
     model = pickle.load(f)
 
-cap = cv2.VideoCapture(2)
+cap = cv2.VideoCapture(0)
 
 ret, frame = cap.read()
 
 while ret:
     ret, frame = cap.read()
 
-    face_landmarks = get_face_landmarks(frame, draw=True, static_image_mode=False)
+    face_landmarks = facemesh.get_face_landmarks(frame, draw=True)
 
     output = model.predict([face_landmarks])
 
